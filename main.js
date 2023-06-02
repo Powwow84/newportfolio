@@ -21,7 +21,7 @@ document.body.appendChild(renderer.domElement)
 // Camera -----------------------------------------
 
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.set(0, 10, 30)
+camera.position.set(0, 1, 2)
 
 // scene -----------------------------------------
 const scene = new THREE.Scene()
@@ -39,8 +39,16 @@ world.gravity.set(0, -9.82, 0)
 //  ------------------------------------------------
 // -------------------------------------------------
 
+//  floor -----------------------
+
+const floorGeometry = new THREE.BoxGeometry(100, 100, 1)
+const floorMaterial = new THREE.MeshBasicMaterial({ color : 'grey'})
+const floor = new THREE.Mesh(floorGeometry, floorMaterial)
+floor.rotation.x = -0.5 * Math.PI
+scene.add(floor)
+
 const floorBody = new CANNON.Body({
-  shape: new CANNON.Box(new CANNON.Vec3( 10, 10, 0.1)),
+  shape: new CANNON.Box(new CANNON.Vec3( 50, 50, 0.1)),
   mass: 0
 })
 floorBody.quaternion.setFromAxisAngle(
@@ -48,6 +56,34 @@ floorBody.quaternion.setFromAxisAngle(
   Math.PI * .5
 )
 world.addBody(floorBody)
+
+
+// About me ---------------------------
+
+const aboutGeometry = new THREE.PlaneGeometry(4 , 2)
+const aboutMaterial = new THREE.MeshBasicMaterial({ color: 'yellow'})
+const about = new THREE.Mesh(aboutGeometry, aboutMaterial)
+scene.add(about)
+about.position.set( 0 , 2, 0)
+
+
+// Skills cube
+
+const skillGeometry = new THREE.BoxGeometry
+const skillMaterial = new THREE.MeshBasicMaterial({ color : 'Brown'})
+const skill = new THREE.Mesh(skillGeometry, skillMaterial)
+scene.add(skill)
+skill.position.set(3, 2, 0)
+
+// head sphere
+
+const headGeometry = new THREE.SphereGeometry(.7)
+const headMaterial = new THREE.MeshBasicMaterial({ color : 'green'})
+const head = new THREE.Mesh(headGeometry, headMaterial)
+scene.add(head)
+head.position.set(-3, 2, 0)
+
+
 
 const cannonDebugger = new CannonDebugger(scene, world)
 
