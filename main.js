@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import * as CANNON from 'cannon-es'
 import CannonDebugger from 'cannon-es-debugger'
 import gsap from 'gsap'
-import { PerspectiveCamera } from 'three'
+import { Group, PerspectiveCamera } from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 
 
@@ -57,13 +57,17 @@ floorBody.quaternion.setFromAxisAngle(
 )
 world.addBody(floorBody)
 
+// Opening Group ----------------------
+const openingGroup = new THREE.Group()
+scene.add(openingGroup)
+
 
 // About me ---------------------------
 
 const aboutGeometry = new THREE.PlaneGeometry(4 , 2)
 const aboutMaterial = new THREE.MeshBasicMaterial({ color: 'yellow'})
 const about = new THREE.Mesh(aboutGeometry, aboutMaterial)
-scene.add(about)
+openingGroup.add(about)
 about.position.set( 0 , 2, 0)
 
 
@@ -72,7 +76,7 @@ about.position.set( 0 , 2, 0)
 const skillGeometry = new THREE.BoxGeometry
 const skillMaterial = new THREE.MeshBasicMaterial({ color : 'Brown'})
 const skill = new THREE.Mesh(skillGeometry, skillMaterial)
-scene.add(skill)
+openingGroup.add(skill)
 skill.position.set(3, 2, 0)
 
 // head sphere
@@ -80,9 +84,19 @@ skill.position.set(3, 2, 0)
 const headGeometry = new THREE.SphereGeometry(.7)
 const headMaterial = new THREE.MeshBasicMaterial({ color : 'green'})
 const head = new THREE.Mesh(headGeometry, headMaterial)
-scene.add(head)
+openingGroup.add(head)
 head.position.set(-3, 2, 0)
 
+// render button
+
+const startGeometry = new THREE.BoxGeometry(2,.5,.5)
+const startMaterial = new THREE.MeshBasicMaterial({ color : 'red'})
+const start = new THREE.Mesh( startGeometry, startMaterial)
+openingGroup.add(start)
+start.position.set(0, 1, 1)
+
+
+// gsap.to(openingGroup.position, { duration: 300, delay: 5, z: -300 })
 
 
 const cannonDebugger = new CannonDebugger(scene, world)
