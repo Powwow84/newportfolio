@@ -116,6 +116,8 @@ start.position.set(0, 0, 0)
 const wallGroup = new THREE.Group()
 scene.add(wallGroup)
 
+const createRoom = () => {
+
 const wallGeometry = new THREE.BoxGeometry(15, 5, 1)
 const wallMaterial = new THREE.MeshBasicMaterial({color : 'orange'})
 
@@ -125,22 +127,10 @@ wall1.position.set(0, -5, 8)
 
 const wallBody1 = new CANNON.Body({
   shape: new CANNON.Box(new CANNON.Vec3(7.5, 2.5, .5)),
-  mass: 0,
-  animate: false,
-  animationStart: null,
-  animationDuration: 5000,
+  mass: 0
 })
 world.addBody(wallBody1)
-wallBody1.position.set(0, -5, 8)
-wallBody1.startPosition = new CANNON.Vec3(0,0,0)
-wallBody1.endPosition = new CANNON.Vec3(10, 0, 0)
-
-const begin = () => {
-  wallBody1.animate = true;
-    wallBody1.animationStart = clock.getElapsedTime();
-    wallBody1.startPosition.copy(wallBody1.position);
-}
-
+wallBody1.position.set(0, 1, 8)
 
 
 const wall2 = new THREE.Mesh(wallGeometry, wallMaterial)
@@ -154,7 +144,7 @@ const wallBody2 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody2)
-wallBody2.position.set(-7, -5, 0)
+wallBody2.position.set(-7, 1, 0)
 wallBody2.quaternion.setFromAxisAngle(
   new CANNON.Vec3( 0 , -1 , 0),
   Math.PI / 2
@@ -170,9 +160,9 @@ const wallBody3 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody3)
-wallBody3.position.set(7, -5, 0)
+wallBody3.position.set(7, 1, 0)
 wallBody3.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(0, -1, 0),
+  new CANNON.Vec3(0, 1, 0),
   Math.PI / 2
 )
 
@@ -185,9 +175,10 @@ const wallBody4 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody4)
-wallBody4.position.set(0, -5, -8)
-
-// gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 7})
+wallBody4.position.set(0, 1, -8)
+}
+createRoom()
+gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 6.5})
 
 
 // projectViews
@@ -300,6 +291,10 @@ document.addEventListener('keyup', function (event) {
 })
 
 
+
+// Animation --------------------
+
+
 const clock = new THREE.Clock()
 let oldElapsedTime = 0
 
@@ -329,24 +324,11 @@ if (keys['w'] && cameraBody.position.y <= 1) {
   cameraBody.applyImpulse(new CANNON.Vec3(force * deltaTime, 0, 0));
 }
 
-if (wallBody1.animate) {
-  let elapsed = elapsedTime - wallBody1.animationStart;
-  if (elapsed > wallBody1.animationDuration) {
-      wallBody1.animate = false;
-      wallBody1.position.copy(wallBody1.endPosition);
-  } else {
-      let t = elapsed / wallBody1.animationDuration;
-      console.log(wallBody1.startPosition, wallBody1.endPosition, t)
-      wallBody1.position.lerp(wallBody1.startPosition, wallBody1.endPosition, t);
-  }
-}
-
-
   // camera.position.copy(cameraBody.position);
-  wall1.position.copy(wallBody1.position)
-  wall2.position.copy(wallBody2.position)
-  wall3.position.copy(wallBody3.position)
-  wall4.position.copy(wallBody4.position)
+  // wall1.position.copy(wallBody1.position)
+  // wall2.position.copy(wallBody2.position)
+  // wall3.position.copy(wallBody3.position)
+  // wall4.position.copy(wallBody4.position)
   requestAnimationFrame(animate)
   // world.step(timeStep)
   renderer.render(scene, camera)
@@ -361,5 +343,3 @@ window.addEventListener('resize', function() {
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
-
-begin()
