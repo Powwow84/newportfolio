@@ -101,15 +101,16 @@ scene.add(openingGroup)
 
 
 // About me ---------------------------
-const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685835456/Portfolio%20textures/Untitled_1240_900_px_7_frtssz.jpg', function(texture) {
+const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685848718/Portfolio%20textures/Untitled_1240_900_px_2_ij7efe.png', function(texture) {
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
 });
 textureA.colorSpace = THREE.SRGBColorSpace;
 
-const aboutGeometry = new THREE.BoxGeometry(2.2 , 1.59, .1)
+const aboutGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
 const aboutMaterial = new THREE.MeshBasicMaterial({
-  map: textureA
+  map: textureA,
+  transparent: true
 })
 const about = new THREE.Mesh(aboutGeometry, aboutMaterial)
 openingGroup.add(about)
@@ -127,27 +128,30 @@ function onLoadTexture(texture) {
 }
 
 const skillMultiMaterial = [
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685839424/Portfolio%20textures/Untitled_design_2_lkipxd.jpg', onLoadTexture)}),
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/4_djv0b0.jpg', onLoadTexture)}),
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/6_n5qqku.jpg', onLoadTexture)}),
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/5_goswtx.jpg', onLoadTexture)}),
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840543/Portfolio%20textures/2_cxe3bf.jpg', onLoadTexture)}),
-  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840553/Portfolio%20textures/3_igk4vs.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850176/Portfolio%20textures/4_rvore2.png', onLoadTexture), transparent: true}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850176/Portfolio%20textures/2_eitd62.png', onLoadTexture), transparent: true}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850176/Portfolio%20textures/5_vkzcul.png', onLoadTexture), transparent: true}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850176/Portfolio%20textures/6_x2uoss.png', onLoadTexture), transparent: true}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850176/Portfolio%20textures/3_bvqbto.png', onLoadTexture), transparent: true}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685850587/Portfolio%20textures/Untitled_design_ectmke.png', onLoadTexture), transparent: true}),
 ];
 
 const skillGeometry = new THREE.BoxGeometry(.8,.8,.8)
-const skillMaterial = new THREE.MeshBasicMaterial({ color : 'Brown'})
+// const skillMaterial = new THREE.MeshBasicMaterial({ color : 'Brown'})
 const skill = new THREE.Mesh(skillGeometry, skillMultiMaterial)
 openingGroup.add(skill)
 skill.position.set(2.5, .4, -1)
 
 // head sphere
 
-const headGeometry = new THREE.SphereGeometry(.5)
-const headMaterial = new THREE.MeshBasicMaterial({ color : 'green'})
+const headGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
+const headMaterial = new THREE.MeshBasicMaterial({ 
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685846883/Portfolio%20textures/Controls_pt3hrj.png', onLoadTexture),
+  transparent: true,
+})
 const head = new THREE.Mesh(headGeometry, headMaterial)
 openingGroup.add(head)
-head.position.set(-2.2, .8, -1)
+head.position.set(-2.3, 0.6, -1)
 
 // render button
 
@@ -158,7 +162,7 @@ head.position.set(-2.2, .8, -1)
 // start.position.set(0, 0, 0)
 
 
-// gsap.to(openingGroup.position, { duration: 300, delay: 5, z: -300 })
+
 
 
 // create room
@@ -229,7 +233,7 @@ const wallBody4 = new CANNON.Body({
 world.addBody(wallBody4)
 wallBody4.position.set(0, 1, -8)
 }
-// createRoom()
+createRoom()
 // gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 6.5})
 
 
@@ -238,24 +242,40 @@ wallBody4.position.set(0, 1, -8)
 const projects = new THREE.Group()
 scene.add(projects)
 
-const projectViewGeometry = new THREE.BoxGeometry(2 , 1.125, .1)
+const projectViewGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
 const projectViewMaterial = new THREE.MeshBasicMaterial({ color : 'white'})
 
-const projectview1 = new THREE.Mesh(projectViewGeometry, projectViewMaterial)
+const projectview1Mat = new THREE.MeshBasicMaterial({
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685853300/Portfolio%20textures/2_cfgnml.png', onLoadTexture), transparent: true
+})
+const projectview1 = new THREE.Mesh(projectViewGeometry, projectview1Mat)
 projects.add(projectview1)
 projectview1.position.set(0, -2, -.5)
 
-const projectview2 = new THREE.Mesh(projectViewGeometry, projectViewMaterial)
+const projectview2Mat = new THREE.MeshBasicMaterial({
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685853300/Portfolio%20textures/4_jfw1fy.png', onLoadTexture), transparent: true
+})
+const projectview2 = new THREE.Mesh(projectViewGeometry, projectview2Mat)
 projects.add(projectview2)
-projectview2.position.set(-2, -2, 0)
-projectview2.rotation.y = Math.PI /3.3
+projectview2.position.set(-1.9, -2, 0)
+projectview2.rotation.y = Math.PI /6
 
-const projectview3 = new THREE.Mesh(projectViewGeometry, projectViewMaterial)
+const projectview3Mat = new THREE.MeshBasicMaterial({
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685853300/Portfolio%20textures/3_uqn63l.png', onLoadTexture), transparent: true
+})
+const projectview3 = new THREE.Mesh(projectViewGeometry, projectview3Mat)
 projects.add(projectview3)
-projectview3.position.set(2, -2, 0)
-projectview3.rotation.y = Math.PI /-3.3
+projectview3.position.set(1.9, -2, 0)
+projectview3.rotation.y = Math.PI /-6
 
-// gsap.to(projects.position, {duration: 5, delay: 5, y: 2.5})
+
+
+// utilities
+
+const showProjects = () => {
+  gsap.to(projects.position, {duration: 5, delay: 0, y: 2.5})
+  gsap.to(openingGroup.position, { duration: 10, delay: 0, z: -10 , y: 5})
+}
 
 
 const video = document.createElement('video')
@@ -321,6 +341,9 @@ document.addEventListener('keydown', function (event) {
     case 'KeyD':
       keys['d'] = true
       break;
+      case 'Enter':
+        showProjects()
+        break;
   }
 })
 
@@ -341,6 +364,10 @@ document.addEventListener('keyup', function (event) {
       break;
   }
 })
+
+// Utililities
+
+
 
 
 
