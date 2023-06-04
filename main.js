@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {PointerLockControls} from 'three/examples/jsm/controls/PointerLockControls';
 import museum from './array'
+import { TextureLoader } from 'three'
 
 
 
@@ -24,8 +25,9 @@ document.body.appendChild(renderer.domElement)
 
 // Camera -----------------------------------------
 
-const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000)
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000)
 camera.position.set(0, .5, 3)
+
 
 const cameraBody = new CANNON.Body({
   mass:1,
@@ -33,7 +35,7 @@ const cameraBody = new CANNON.Body({
   fixedRotation: true
 })
 world.addBody(cameraBody)
-cameraBody.position.set(0, .5, 3)
+cameraBody.position.set(0, .5, 5)
 
 
 // scene -----------------------------------------
@@ -47,12 +49,37 @@ orbitControls.update()
 
 
 //  ------------------------------------------------
+
+const textureLoader = new THREE.TextureLoader()
+
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+scene.background = cubeTextureLoader.load([
+  'https://ucarecdn.com/d0269f89-0cdb-4433-b8e6-76b9e674648f/', //side3
+  'https://ucarecdn.com/08d7d010-beda-49cd-b395-9f0992d17008/', //side1
+  'https://ucarecdn.com/a8e0f013-b145-4e6e-811a-e129a57f1287/', //top
+  'https://ucarecdn.com/ab8ae300-45c9-49f8-bd6a-a065a27b2d99/', //bottom
+  'https://ucarecdn.com/07aca338-fd8d-4075-9632-b76cfd06d9ad/', //side4
+  'https://ucarecdn.com/75808435-d003-4a96-8806-bbebdf8728b3/', //side2
+])
+
+
 // -------------------------------------------------
 
 //  floor -----------------------
 
+const floorTexture = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685837643/Portfolio%20textures/AdobeStock_111425816_e8uy7v.jpg', function(texture) {
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+});
+floorTexture.colorSpace = THREE.SRGBColorSpace;
+
 const floorGeometry = new THREE.BoxGeometry(12.7, 14.6, 1)
-const floorMaterial = new THREE.MeshBasicMaterial({ color : 'grey'})
+const floorMaterial = new THREE.MeshBasicMaterial({ 
+  map: floorTexture,
+  // normalMap: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685832992/Portfolio%20textures/22f45db7a4965c2c9d6104aeb65a3db8_nm8h0x.jpg'),
+  minFilter: THREE.LinearFilter,
+  magFilter: THREE.LinearFilter
+})
 const floor = new THREE.Mesh(floorGeometry, floorMaterial)
 floor.rotation.x = -0.5 * Math.PI
 floor.position.set( 0, -1, 0)
@@ -74,12 +101,20 @@ scene.add(openingGroup)
 
 
 // About me ---------------------------
+const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685835456/Portfolio%20textures/Untitled_1240_900_px_7_frtssz.jpg', function(texture) {
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+});
+textureA.colorSpace = THREE.SRGBColorSpace;
 
-const aboutGeometry = new THREE.PlaneGeometry(2 , 1)
-const aboutMaterial = new THREE.MeshBasicMaterial({ color: 'yellow'})
+const aboutGeometry = new THREE.PlaneGeometry(2 , 1.45)
+const aboutMaterial = new THREE.MeshBasicMaterial({
+  map: textureA
+})
 const about = new THREE.Mesh(aboutGeometry, aboutMaterial)
 openingGroup.add(about)
 about.position.set( 0 , .5, 0)
+
 
 
 
@@ -101,11 +136,11 @@ head.position.set(-2.2, .8, -1)
 
 // render button
 
-const startGeometry = new THREE.BoxGeometry(1,.25,.25)
-const startMaterial = new THREE.MeshBasicMaterial({ color : 'red'})
-const start = new THREE.Mesh( startGeometry, startMaterial)
-openingGroup.add(start)
-start.position.set(0, 0, 0)
+// const startGeometry = new THREE.BoxGeometry(1,.25,.25)
+// const startMaterial = new THREE.MeshBasicMaterial({ color : 'red'})
+// const start = new THREE.Mesh( startGeometry, startMaterial)
+// openingGroup.add(start)
+// start.position.set(0, 0, 0)
 
 
 // gsap.to(openingGroup.position, { duration: 300, delay: 5, z: -300 })
@@ -119,7 +154,9 @@ scene.add(wallGroup)
 const createRoom = () => {
 
 const wallGeometry = new THREE.BoxGeometry(15, 5, 1)
-const wallMaterial = new THREE.MeshBasicMaterial({color : 'orange'})
+const wallMaterial = new THREE.MeshBasicMaterial({
+  map: floorTexture
+})
 
 const wall1 = new THREE.Mesh(wallGeometry, wallMaterial)
 wallGroup.add(wall1)
@@ -177,8 +214,8 @@ const wallBody4 = new CANNON.Body({
 world.addBody(wallBody4)
 wallBody4.position.set(0, 1, -8)
 }
-createRoom()
-gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 6.5})
+// createRoom()
+// gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 6.5})
 
 
 // projectViews
