@@ -35,7 +35,7 @@ const cameraBody = new CANNON.Body({
   fixedRotation: true
 })
 world.addBody(cameraBody)
-cameraBody.position.set(0, .5, 5)
+cameraBody.position.set(0, 0, 5)
 
 
 // scene -----------------------------------------
@@ -107,24 +107,39 @@ const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/
 });
 textureA.colorSpace = THREE.SRGBColorSpace;
 
-const aboutGeometry = new THREE.PlaneGeometry(2 , 1.45)
+const aboutGeometry = new THREE.BoxGeometry(2.2 , 1.59, .1)
 const aboutMaterial = new THREE.MeshBasicMaterial({
   map: textureA
 })
 const about = new THREE.Mesh(aboutGeometry, aboutMaterial)
 openingGroup.add(about)
-about.position.set( 0 , .5, 0)
+about.position.set( 0 , .4, 0)
 
 
 
 
 // Skills cube
 
-const skillGeometry = new THREE.BoxGeometry(.5,.5,.5)
+function onLoadTexture(texture) {
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.colorSpace = THREE.SRGBColorSpace;
+}
+
+const skillMultiMaterial = [
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685839424/Portfolio%20textures/Untitled_design_2_lkipxd.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/4_djv0b0.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/6_n5qqku.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840554/Portfolio%20textures/5_goswtx.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840543/Portfolio%20textures/2_cxe3bf.jpg', onLoadTexture)}),
+  new THREE.MeshBasicMaterial({map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685840553/Portfolio%20textures/3_igk4vs.jpg', onLoadTexture)}),
+];
+
+const skillGeometry = new THREE.BoxGeometry(.8,.8,.8)
 const skillMaterial = new THREE.MeshBasicMaterial({ color : 'Brown'})
-const skill = new THREE.Mesh(skillGeometry, skillMaterial)
+const skill = new THREE.Mesh(skillGeometry, skillMultiMaterial)
 openingGroup.add(skill)
-skill.position.set(2.1, .8, -1)
+skill.position.set(2.5, .4, -1)
 
 // head sphere
 
@@ -361,6 +376,7 @@ if (keys['w'] && cameraBody.position.y <= 1) {
   cameraBody.applyImpulse(new CANNON.Vec3(force * deltaTime, 0, 0));
 }
 
+skill.rotation.y += .005
   // camera.position.copy(cameraBody.position);
   // wall1.position.copy(wallBody1.position)
   // wall2.position.copy(wallBody2.position)
@@ -369,7 +385,7 @@ if (keys['w'] && cameraBody.position.y <= 1) {
   requestAnimationFrame(animate)
   // world.step(timeStep)
   renderer.render(scene, camera)
-  cannonDebugger.update()
+  // cannonDebugger.update()
 
 }
 
