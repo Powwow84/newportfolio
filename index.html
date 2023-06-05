@@ -5,6 +5,32 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pao Saelee</title>
+    <style>
+      .crosshair {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background: url('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685909621/Portfolio%20textures/Untitled_design_1_eyxoze.png'); /* Replace with your crosshair image */
+        background-size: contain;
+        pointer-events: none; /* This makes the crosshair click-through */
+        transform: translate(-50%, -50%); /* This centers the crosshair at the mouse position */
+      }
+
+    #score {
+      position: absolute;
+      font-family: "Roboto";
+      border: solid 1px white;
+      border-radius: 5%/ 10%;
+      padding: .5rem 1rem;
+      margin: .5rem 1rem;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 24px;
+  }
+    </style>
   </head>
   <body>
     <style>
@@ -12,6 +38,8 @@
         margin: 0
       }
     </style>
+    <div id="score">Score: 0</div>
+    <div class="crosshair"></div>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
