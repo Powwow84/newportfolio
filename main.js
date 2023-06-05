@@ -31,19 +31,19 @@ camera.position.set(0, .5, 3)
 
 const cameraBody = new CANNON.Body({
   mass:1,
-  shape: new CANNON.Box(new CANNON.Vec3(.1, .5 ,.1)),
+  shape: new CANNON.Box(new CANNON.Vec3(.1, .3 ,.1)),
   fixedRotation: true
 })
 world.addBody(cameraBody)
-cameraBody.position.set(0, 0, 5)
+cameraBody.position.set(0, 0, 3)
 
 
 // scene -----------------------------------------
 const scene = new THREE.Scene()
 
 // Orbit Controls 
-const orbitControls = new OrbitControls(camera, renderer.domElement);
-orbitControls.update()
+// const orbitControls = new OrbitControls(camera, renderer.domElement);
+// orbitControls.update()
 
 
 
@@ -186,7 +186,7 @@ const wallBody1 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody1)
-wallBody1.position.set(0, 1, 8)
+wallBody1.position.set(0, 1, 7)
 
 
 const wall2 = new THREE.Mesh(wallGeometry, wallMaterial)
@@ -200,7 +200,7 @@ const wallBody2 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody2)
-wallBody2.position.set(-7, 1, 0)
+wallBody2.position.set(-6.5, 1, 0)
 wallBody2.quaternion.setFromAxisAngle(
   new CANNON.Vec3( 0 , -1 , 0),
   Math.PI / 2
@@ -216,7 +216,7 @@ const wallBody3 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody3)
-wallBody3.position.set(7, 1, 0)
+wallBody3.position.set(6.5, 1, 0)
 wallBody3.quaternion.setFromAxisAngle(
   new CANNON.Vec3(0, 1, 0),
   Math.PI / 2
@@ -231,10 +231,10 @@ const wallBody4 = new CANNON.Body({
   mass: 0
 })
 world.addBody(wallBody4)
-wallBody4.position.set(0, 1, -8)
+wallBody4.position.set(0, 1, -7)
 }
 createRoom()
-// gsap.to(wallGroup.position, { duration : 5, delay: 5, y: 6.5})
+
 
 
 // projectViews
@@ -274,7 +274,13 @@ projectview3.rotation.y = Math.PI /-6
 
 const showProjects = () => {
   gsap.to(projects.position, {duration: 5, delay: 0, y: 2.5})
-  gsap.to(openingGroup.position, { duration: 10, delay: 0, z: -10 , y: 5})
+  gsap.to(openingGroup.position, { duration: 10, delay: 0, z: -8 , y: 5})
+}
+
+const playGame = () => {
+  gsap.to(projects.position, {duration: 5, delay: 0, y: -2})
+  gsap.to(openingGroup.position, { duration: 10, delay: 0, z: -8 , y: 5})
+  gsap.to(wallGroup.position, { duration : 5, delay: 0, y: 6.5})
 }
 
 
@@ -298,31 +304,31 @@ const cannonDebugger = new CannonDebugger(scene, world)
 
 // controls 
 
-// const controls = new PointerLockControls(camera, document.body);
+const controls = new PointerLockControls(camera, document.body);
 
-// // Event listener to start the pointer lock when user clicks the scene
-// document.body.addEventListener('click', () => {
-//   controls.lock();
-// });
+// Event listener to start the pointer lock when user clicks the scene
+document.body.addEventListener('click', () => {
+  controls.lock();
+});
 
-// // Event listener to handle mouse movements and update camera rotation
-// document.addEventListener('mousemove', (event) => {
-//   if (controls.isLocked) {
-//     const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-//     const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+// Event listener to handle mouse movements and update camera rotation
+document.addEventListener('mousemove', (event) => {
+  if (controls.isLocked) {
+    const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+    const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
  
-//   }
-// });
+  }
+});
 
-// document.addEventListener('pointerlockchange', () => {
-//   console.log(controls.isLocked)
-//   // controls.isLocked = document.pointerLockElement === renderer.domElement;
-// });
+document.addEventListener('pointerlockchange', () => {
+  console.log(controls.isLocked)
+  // controls.isLocked = document.pointerLockElement === renderer.domElement;
+});
 
-// document.addEventListener('mozpointerlockchange', () => {
-//   // controls.isLocked = document.mozPointerLockElement === renderer.domElement;
-// });
+document.addEventListener('mozpointerlockchange', () => {
+  // controls.isLocked = document.mozPointerLockElement === renderer.domElement;
+});
 
 
 const keys = {w: false, a: false, s: false, d: false}
@@ -341,8 +347,11 @@ document.addEventListener('keydown', function (event) {
     case 'KeyD':
       keys['d'] = true
       break;
-      case 'Enter':
+    case 'Enter':
         showProjects()
+        break;
+    case 'Digit1':
+        playGame()
         break;
   }
 })
@@ -385,7 +394,6 @@ function animate() {
 
   world.step(1/60, deltaTime, 3 )
 
-  // sphereMesh.position.copy(sphereBody.position)
   const force = 600;
 
 if (keys['w'] && cameraBody.position.y <= 1) {
@@ -404,7 +412,7 @@ if (keys['w'] && cameraBody.position.y <= 1) {
 }
 
 skill.rotation.y += .005
-  // camera.position.copy(cameraBody.position);
+  camera.position.copy(cameraBody.position);
   // wall1.position.copy(wallBody1.position)
   // wall2.position.copy(wallBody2.position)
   // wall3.position.copy(wallBody3.position)
