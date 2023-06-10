@@ -146,7 +146,7 @@ skill.position.set(2.5, .4, -1)
 
 const headGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
 const headMaterial = new THREE.MeshBasicMaterial({ 
-  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685930264/Portfolio%20textures/Controls_2_xhzp7z.png', onLoadTexture),
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1686423113/Portfolio%20textures/Controls_6_zq9lpr.png', onLoadTexture),
   transparent: true,
 })
 const head = new THREE.Mesh(headGeometry, headMaterial)
@@ -316,6 +316,13 @@ for (let i = 0; i < 20; i++) {
 
 // utilities
 
+const resumeDownload = () => {
+  const resumeLink = document.createElement('a');
+  resumeLink.href = 'https://res.cloudinary.com/dpxbrpprt/raw/upload/v1686422334/Resume/Pao_s_Resume_dev_m9a5tq.docx'
+  resumeLink.download = 'resume.docx'
+  resumeLink.click();
+}
+
 const seeProfile = () => {
   gsap.to(openingGroup.position, {duration : 10, delay: 0 , z: 0, y: 0})
   gsap.to(projects.position, {duration: 5, delay: 0, y: -2})
@@ -368,6 +375,7 @@ const playGame = () => {
       let randomY = Math.floor(Math.random() * 10);
       rock.position.set(randomX, randomY, -100 - randomZ);
       gsap.to(wallGroup.position, { duration : 5, delay: 0, y: .4})
+      gsap.to(openingGroup.position, {duration : 10, delay: 0 , z: 0, y: 0})
     });
   }, 60000);
 }
@@ -556,6 +564,9 @@ document.addEventListener('keydown', function (event) {
         break;
     case 'Digit2':
         seeProfile()
+        break;
+    case "Digit4":
+        resumeDownload()
         break;
   }
 })
