@@ -318,7 +318,7 @@ for (let i = 0; i < 20; i++) {
 
 const resumeDownload = () => {
   const resumeLink = document.createElement('a');
-  resumeLink.href = 'https://res.cloudinary.com/dpxbrpprt/raw/upload/v1687458501/Portfolio%20textures/Pao_s_Resume_dev_1_vyua0n.docx'
+  resumeLink.href = 'https://res.cloudinary.com/dpxbrpprt/raw/upload/v1688680972/Resume/Pao_s_Resume_-_2023_rkehyq.docx'
   resumeLink.download = 'resume.docx'
   resumeLink.click();
 }
