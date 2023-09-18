@@ -101,7 +101,7 @@ scene.add(openingGroup)
 
 
 // About me ---------------------------
-const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685848718/Portfolio%20textures/Untitled_1240_900_px_2_ij7efe.png', function(texture) {
+const textureA = textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1695017371/Portfolio%20textures/Untitled_1240_900_px_4_lfd3m5.png', function(texture) {
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
 });
@@ -142,25 +142,37 @@ const skill = new THREE.Mesh(skillGeometry, skillMultiMaterial)
 openingGroup.add(skill)
 skill.position.set(2.5, .4, -1)
 
+// -------------------- Asteroid -------------
+
+const startAsteroidGeometry = new THREE.SphereGeometry(.6)
+const startAsteroidMaterial = new THREE.MeshBasicMaterial({
+  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685920298/Portfolio%20textures/Dh_moon_texture_mlmsgu.webp', onLoadTexture),
+  normalmap: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685920336/Portfolio%20textures/images_1_koxekx.jpg')
+})
+
+const startAsteroid = new THREE.Mesh(startAsteroidGeometry, startAsteroidMaterial)
+openingGroup.add(startAsteroid)
+startAsteroid.position.set(-2.5, .4, -1)
+
 // head sphere
 
-const headGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
-const headMaterial = new THREE.MeshBasicMaterial({ 
-  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1686423113/Portfolio%20textures/Controls_6_zq9lpr.png', onLoadTexture),
-  transparent: true,
-})
-const head = new THREE.Mesh(headGeometry, headMaterial)
-openingGroup.add(head)
-head.position.set(-2.3, 1, -1)
+// const headGeometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
+// const headMaterial = new THREE.MeshBasicMaterial({ 
+//   map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1686423113/Portfolio%20textures/Controls_6_zq9lpr.png', onLoadTexture),
+//   transparent: true,
+// })
+// const head = new THREE.Mesh(headGeometry, headMaterial)
+// openingGroup.add(head)
+// head.position.set(-2.3, 1, -1)
 
-const head2Geometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
-const head2Material = new THREE.MeshBasicMaterial({ 
-  map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685931444/Portfolio%20textures/Controls_5_tidqll.png', onLoadTexture),
-  transparent: true,
-})
-const head2 = new THREE.Mesh(head2Geometry, head2Material)
-openingGroup.add(head2)
-head2.position.set(-2.3, .15, -1)
+// const head2Geometry = new THREE.BoxGeometry(2.2 , 1.59, .0001)
+// const head2Material = new THREE.MeshBasicMaterial({ 
+//   map: textureLoader.load('https://res.cloudinary.com/dpxbrpprt/image/upload/v1685931444/Portfolio%20textures/Controls_5_tidqll.png', onLoadTexture),
+//   transparent: true,
+// })
+// const head2 = new THREE.Mesh(head2Geometry, head2Material)
+// openingGroup.add(head2)
+// head2.position.set(-2.3, .15, -1)
 
 // render button
 
@@ -556,18 +568,18 @@ document.addEventListener('keydown', function (event) {
     case 'KeyD':
       keys['d'] = true
       break;
-    case 'Digit3':
-        showProjects()
-        break;
+    // case 'Digit3':
+    //     showProjects()
+    //     break;
     case 'Digit1':
         playGame()
         break;
-    case 'Digit2':
-        seeProfile()
-        break;
-    case "Digit4":
-        resumeDownload()
-        break;
+    // case 'Digit2':
+    //     seeProfile()
+    //     break;
+    // case "Digit4":
+    //     resumeDownload()
+    //     break;
   }
 })
 
@@ -622,6 +634,7 @@ function animate() {
 // }
 
 skill.rotation.y += .005
+startAsteroid.rotation.y -=.005
   camera.position.copy(cameraBody.position);
   // start.position.copy(startBody.position)
   // wall1.position.copy(wallBody1.position)
